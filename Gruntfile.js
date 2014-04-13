@@ -1,4 +1,4 @@
-// Generated on 2014-04-12 using generator-angular 0.8.0
+// Generated on 2014-04-13 using generator-angular 0.8.0
 'use strict';
 
 // # Globbing
@@ -374,6 +374,10 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.registerTask('prepare', [
+    'clean:server',
+    'bowerInstall'
+  ]);
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
