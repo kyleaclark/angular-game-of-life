@@ -41,10 +41,10 @@ refer to https://github.com/gruntjs/grunt-contrib-compass
 
 Clone repo to local.
 
-Use correct nvm version >= 0.10.0 < 0.11.0 e.g.:
+Use correct nvm version >= 0.10.0 < 0.11.0 (version 0.10.26 recommended) e.g.:
 
 ```
-nvm use 0.10.17
+nvm use 0.10.26
 ```
 
 Run "npm install" to install project dependencies from package.json:
@@ -53,15 +53,38 @@ Run "npm install" to install project dependencies from package.json:
 npm install
 ```
 
+If issues installing node packages, try the solution below. Otherwise, continue to the Prepare step.
+
+```
+sudo npm cache clean
+sudo npm install
+```
+
+##Run Prepare
+
+Run "grunt prepare" to install project dependencies from bower.json.
+
+```
+grunt prepare
+```
+
 ##Run Dev-Mode
 
 Run "grunt serve" command from root to run application locally
+
+```
+grunt serve
+```
 
 ##Run Production-Mode
 
 Run "grunt build" command from root to compile js, css, & html into disbrution-ready, minified code
 
-Use http-server for node.js to run the distribution files in production-mode locally.
+```
+grunt build
+```
+
+Use http-server for node.js to run the distribution files in production-mode locally
 
 Install the http-server package globally:
 
@@ -75,5 +98,12 @@ Open "dist" folder from root of project. Run the http-server e.g.
 http-server -p 8000
 ```
 
+Open the localhost port (e.g. localhost:8000) in your browser
 
+##Run Tests
 
+Run "grunt test" command from root to execute tests
+
+```
+grunt test
+```
