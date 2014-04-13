@@ -13,6 +13,8 @@ AngularJS application : evolves generations of dead or alive cells in a game boa
 
 ##Setup
 
+[Setup instructions default to Mac OS X environment, but setup should be possible in Windows and Linux, too]
+
 Install Node dependencies (Node, NPM, NVM) [Node compatible version >= 0.10.0 < 0.11.0]
 
 ```
@@ -31,7 +33,7 @@ Install Bower dependencies [npm install -g bower, Git via http://git-scm.com]
 refer to http://bower.io/
 ```
 
-Install Compass dependencies (Ruby, Compass, & Sass) [gem update --system && gem install compass]
+Install Compass / Sass dependencies (Ruby, Compass) [gem update --system && gem install compass]
 
 ```
 refer to https://github.com/gruntjs/grunt-contrib-compass
