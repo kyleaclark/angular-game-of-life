@@ -10,8 +10,9 @@
 
 /* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -64,6 +65,17 @@ body {
 
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.game-board-row {
+  margin: 0;
+  padding: 0;
+}
+
+.game-board-cell {
+  display: inline-block;
+  list-style-type: none;
+  margin: 8px;
 }
 
 /* Responsive: Portrait tablets and up */

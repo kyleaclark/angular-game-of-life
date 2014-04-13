@@ -1,36 +1,44 @@
 <div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">game of life</h3>
-</div>
-
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <h3 class="text-muted">Game of Life</h3>
 </div>
 
 <div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+  <p>Game of Life is similar to Game of Thrones, except they're not really the same.</p>
+  <p>Evolve generations of dead or alive cells in a game board</p>
+  <p>The game of life follows the rules below:</p>
+  <ol>
+    <li>Any live cell with fewer than two live neighbours dies (under-population)</li>
+    <li>Any live cell with two or three live neighbours lives on to the next generation (survival)</li>
+    <li>Any live cell with more than three live neighbours dies (overcrowding)</li>
+    <li>Any dead cell with exactly three live neighbours becomes a live cell (reproduction)</li>
+    <li>Each cell lives or dies independently (not sequentially) in a generational evolution</li>
+  </ol>
+</div>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="jumbotron">
+  <ul class="game-board-row" ng-repeat="row in gameBoard track by $index">
+    <li class="game-board-cell" ng-repeat="cell in row track by $index">
+      {{cell}}
+    </li>
+  </ul>
 </div>
 
 <div class="footer">
-  <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+  <p>Game of Life</p>
 </div>
+
+<!--
+
+0 1 0 0 0
+1 0 0 1 1
+1 1 0 0 1
+0 1 0 0 0
+1 0 0 0 1
+
+0 0 0 0 0
+1 0 1 1 1
+1 1 1 1 1
+0 1 0 0 0
+0 0 0 0 0
+
+-->
