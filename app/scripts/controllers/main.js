@@ -14,6 +14,10 @@ angular.module('gameOfLifeApp', [
     /* Init vars within scope */
     $scope.initVars = function () {
       $scope.GAME_BOARD_SIZE = 5;
+      $scope.MIN_ROW = 0;
+      $scope.MAX_ROW = 5;
+      $scope.MIN_COL = 0;
+      $scope.MAX_COL = 5;
       $scope.DEAD_CELL = 0;
       $scope.LIVE_CELL = 0;
     };
@@ -23,15 +27,15 @@ angular.module('gameOfLifeApp', [
       var GAME_BOARD_SIZE = $scope.GAME_BOARD_SIZE,
           row = null,
           col = null,
-          colSize = GAME_BOARD_SIZE,
-          rowSize = GAME_BOARD_SIZE,
+          maxRow = $scope.MAX_ROW,
+          maxCol = $scope.MAX_ROW,
           gameBoard = new Array(GAME_BOARD_SIZE);
 
       // Create gameBoard array of rows and column cells
-      for (row = 0; row < rowSize; row++) {
+      for (row = 0; row < maxRow; row++) {
         gameBoard[row] = new Array(this.rowSize);
 
-        for (col = 0; col < colSize; col++) {
+        for (col = 0; col < maxCol; col++) {
           // Round number to a random generation between 0 < 1
           gameBoard[row][col] = Math.round(Math.random());
         }
@@ -49,8 +53,8 @@ angular.module('gameOfLifeApp', [
           row = null,
           col = null,
           cell = null,
-          colSize = GAME_BOARD_SIZE,
-          rowSize = GAME_BOARD_SIZE,
+          maxRow = $scope.MAX_ROW,
+          maxCol = $scope.MAX_ROW,
           childGenerationBoard = null;
 
       // Clone array copy of parentGeneration to childGeneration
@@ -58,8 +62,8 @@ angular.module('gameOfLifeApp', [
       childGenerationBoard = CommonArrayService.cloneMultiDimensionalArray($scope.parentGenerationBoard);
 
       // Create gameBoard array of rows and column cells
-      for (row = 0; row < rowSize; row++) {
-        for (col = 0; col < colSize; col++) {
+      for (row = 0; row < maxRow; row++) {
+        for (col = 0; col < maxCol; col++) {
           cell = childGenerationBoard[row][col];
           childGenerationBoard[row][col] = $scope.evolveCell(row, col, cell);
         }
@@ -72,6 +76,34 @@ angular.module('gameOfLifeApp', [
     /* Logic to determine cell values of evolution generation */
     $scope.evolveCell = function () {
       return 1;
+    };
+
+    $scope.verifyNeighborCellsExist = function (row, col) {
+      var minRow = $scope.MIN_ROW ,
+          maxRow = $scope.MAX_ROW - 1,
+          minCol = $scope.MIN_COL,
+          maxCol = $scope.MAX_ROW - 1;
+
+      $scope.topNeighborExists = false;
+      $scope.rightNeighborExists = false;
+      $scope.bottomNeighborExists = false;
+      $scope.leftNeighborExists = false;
+
+      if (row > minRow) {
+        $scope.topNeighborExists = true;
+      }
+
+      if (col < maxCol) {
+        $scope.rightNeighborExists = true;
+      }
+
+      if (row < maxRow) {
+        $scope.bottomNeighborExists = true;
+      }
+
+      if (col > minCol) {
+        $scope.leftNeighborExists = true;
+      }
     };
 
     // Init main flow

@@ -25,6 +25,10 @@ describe('Controller: MainCtrl', function () {
 
       // Assert
       expect(scope.GAME_BOARD_SIZE).to.equal(5);
+      expect(scope.MIN_ROW).to.equal(0);
+      expect(scope.MAX_ROW).to.equal(5);
+      expect(scope.MIN_COL).to.equal(0);
+      expect(scope.MAX_COL).to.equal(5);
       expect(scope.DEAD_CELL).to.equal(0);
       expect(scope.LIVE_CELL).to.equal(0);
     });
@@ -141,6 +145,17 @@ describe('Controller: MainCtrl', function () {
 
   describe('When the evolveCell method is called to evolve an individual cell generation', function () {
 
+    it('should return a value of 1', function () {
+      // Arrange
+      var cell = null;
+
+      // Act
+      cell = scope.evolveCell();
+
+      // Assert
+      expect(cell).to.equal(1);
+    });
+
     it.skip('should return a value of 0 to equal a dead cell', function () {
 
     });
@@ -163,6 +178,78 @@ describe('Controller: MainCtrl', function () {
 
     it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
 
+    });
+
+  });
+
+  describe('When the verifyNeighborExists method is called', function () {
+
+    it('should set the top neighbor cell exists to true only if row is greater than the first row', function () {
+      // Arrange
+      var topTestOne = false,
+          topTestTwo = false;
+
+      // Act
+      scope.verifyNeighborCellsExist(scope.MIN_ROW, 0);
+      topTestOne = scope.topNeighborExists;
+
+      scope.verifyNeighborCellsExist(scope.MIN_ROW + 1, 0);
+      topTestTwo = scope.topNeighborExists;
+
+      // Assert
+      expect(topTestOne).to.be.false;
+      expect(topTestTwo).to.be.true;
+    });
+
+    it('should set the right neighbor cell exists to true only if col is less than the last col', function () {
+      // Arrange
+      var rightTestOne = false,
+          rightTestTwo = false;
+
+      // Act
+      scope.verifyNeighborCellsExist(0, scope.MAX_COL - 1);
+      rightTestOne = scope.rightNeighborExists;
+
+      scope.verifyNeighborCellsExist(0, scope.MAX_COL - 2);
+      rightTestTwo = scope.rightNeighborExists;
+
+      // Assert
+      expect(rightTestOne).to.be.false;
+      expect(rightTestTwo).to.be.true;
+    });
+
+    it('should set the bottom neighbor cell exists to true only if row is less than the last row', function () {
+      // Arrange
+      var bottomTestOne = false,
+          bottomTestTwo = false;
+
+      // Act
+      scope.verifyNeighborCellsExist(scope.MAX_ROW - 1, 0);
+      bottomTestOne = scope.bottomNeighborExists;
+
+      scope.verifyNeighborCellsExist(scope.MAX_ROW - 2, 0);
+      bottomTestTwo = scope.bottomNeighborExists;
+
+      // Assert
+      expect(bottomTestOne).to.be.false;
+      expect(bottomTestTwo).to.be.true;
+    });
+
+    it('should set the left neighbor cell exists to true only if col is greater than the first col', function () {
+      // Arrange
+      var leftTestOne = false,
+          leftTestTwo = false;
+
+      // Act
+      scope.verifyNeighborCellsExist(0, scope.MIN_COL);
+      leftTestOne = scope.leftNeighborExists;
+
+      scope.verifyNeighborCellsExist(0, scope.MIN_COL + 1);
+      leftTestTwo = scope.leftNeighborExists;
+
+      // Assert
+      expect(leftTestOne).to.be.false;
+      expect(leftTestTwo).to.be.true;
     });
 
   });
