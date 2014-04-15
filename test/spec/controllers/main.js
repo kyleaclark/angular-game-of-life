@@ -3,7 +3,8 @@
 describe('Controller: MainCtrl', function () {
 
   var MainCtrl = null,
-      scope = null;
+      scope = null,
+      spy = sinon.spy;
 
   // Initialize the controller and a mock scope
   beforeEach(function () {
@@ -144,6 +145,18 @@ describe('Controller: MainCtrl', function () {
   });
 
   describe('When the evolveCell method is called to evolve an individual cell generation', function () {
+
+    it('should call verifyNeighborCellsExist method to verify which neighbor cells exist for the given row and col', function () {
+      // Arrange
+      spy(scope, 'verifyNeighborCellsExist');
+
+      // Act
+      scope.evolveCell(0, 0);
+
+      // Assert
+      expect(scope.verifyNeighborCellsExist.calledOnce).to.be.true;
+      expect(scope.verifyNeighborCellsExist.calledWith(0, 0)).to.be.true;
+    });
 
     it('should return a value of 1', function () {
       // Arrange

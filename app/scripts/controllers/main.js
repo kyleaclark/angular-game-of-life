@@ -74,7 +74,9 @@ angular.module('gameOfLifeApp', [
     };
 
     /* Logic to determine cell values of evolution generation */
-    $scope.evolveCell = function () {
+    $scope.evolveCell = function (row, col) {
+      $scope.verifyNeighborCellsExist(row, col);
+
       return 1;
     };
 
