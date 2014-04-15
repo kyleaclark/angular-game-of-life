@@ -14,6 +14,8 @@ angular.module('gameOfLifeApp', [
     /* Init vars within scope */
     $scope.initVars = function () {
       $scope.GAME_BOARD_SIZE = 5;
+      $scope.DEAD_CELL = 0;
+      $scope.LIVE_CELL = 0;
     };
 
     /* Initialize gameBoard array */

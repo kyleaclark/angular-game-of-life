@@ -25,6 +25,8 @@ describe('Controller: MainCtrl', function () {
 
       // Assert
       expect(scope.GAME_BOARD_SIZE).to.equal(5);
+      expect(scope.DEAD_CELL).to.equal(0);
+      expect(scope.LIVE_CELL).to.equal(0);
     });
 
   });
