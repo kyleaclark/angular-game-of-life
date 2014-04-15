@@ -137,17 +137,30 @@ describe('Controller: MainCtrl', function () {
 
   });
 
-  describe('When the evolveCell method is called', function () {
+  describe('When the evolveCell method is called to evolve an individual cell generation', function () {
 
-    it('should return a value of 1', function () {
-      // Arrange
-      var cell = null;
+    it.skip('should return a value of 0 to equal a dead cell', function () {
 
-      // Act
-      cell = scope.evolveCell();
+    });
 
-      // Assert
-      expect(cell).to.equal(1);
+    it.skip('should return a value of 1 to equal a live cell', function () {
+
+    });
+
+    it.skip('should return a dead cell value if a live cell has fewer than two live neighbors', function () {
+
+    });
+
+    it.skip('should return a live cell value if a live cell has two or three live neighbors', function () {
+
+    });
+
+    it.skip('should return a dead cell value if a live cell has more than three live neighbors', function () {
+
+    });
+
+    it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
+
     });
 
   });
