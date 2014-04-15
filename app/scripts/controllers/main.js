@@ -9,8 +9,7 @@ angular.module('gameOfLifeApp', [
     function init() {
       $scope.initVars();
       $scope.initGameBoard();
-      $scope.createNewGeneration();
-    };
+    }
 
     /* Init vars within scope */
     $scope.initVars = function () {
@@ -30,10 +29,10 @@ angular.module('gameOfLifeApp', [
       for (row = 0; row < rowSize; row++) {
         gameBoard[row] = new Array(this.rowSize);
 
-         for (col = 0; col < colSize; col++) {
-           // Round number to a random generation between 0 < 1
-           gameBoard[row][col] = Math.round(Math.random());
-         }
+        for (col = 0; col < colSize; col++) {
+          // Round number to a random generation between 0 < 1
+          gameBoard[row][col] = Math.round(Math.random());
+        }
       }
 
       // Init empty gameBoards array and push initial randomized gameBoard to gameBoards
@@ -69,7 +68,7 @@ angular.module('gameOfLifeApp', [
     };
 
     /* Logic to determine cell values of evolution generation */
-    $scope.evolveCell = function (row, col, cell) {
+    $scope.evolveCell = function () {
       return 1;
     };
 
