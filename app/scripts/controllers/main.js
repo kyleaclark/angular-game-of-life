@@ -63,8 +63,7 @@ angular.module('gameOfLifeApp', [
 
     /* Create a new generation of cell values to push to gameBoards array */
     $scope.createNewGeneration = function () {
-      var GAME_BOARD_SIZE = $scope.GAME_BOARD_SIZE,
-          gameBoardsLength = $scope.gameBoards.length,
+      var gameBoardsLength = $scope.gameBoards.length,
           row = null,
           col = null,
           cell = null,
@@ -122,7 +121,7 @@ angular.module('gameOfLifeApp', [
         return liveCell;
       }
 
-      return deadCell
+      return deadCell;
     };
 
     $scope.verifyNeighborCellsExist = function (row, col) {
@@ -132,16 +131,12 @@ angular.module('gameOfLifeApp', [
           maxCol = $scope.MAX_ROW - 1;
 
       $scope.topNeighborExists = false;
-      $scope.rightNeighborExists = false;
       $scope.bottomNeighborExists = false;
+      $scope.rightNeighborExists = false;
       $scope.leftNeighborExists = false;
 
       if (row > minRow) {
         $scope.topNeighborExists = true;
-      }
-
-      if (col < maxCol) {
-        $scope.rightNeighborExists = true;
       }
 
       if (row < maxRow) {
@@ -151,6 +146,54 @@ angular.module('gameOfLifeApp', [
       if (col > minCol) {
         $scope.leftNeighborExists = true;
       }
+
+      if (col < maxCol) {
+        $scope.rightNeighborExists = true;
+      }
+    };
+
+    $scope.sumNeighborCellValues = function (row, col) {
+      var board = $scope.parentGenerationBoard,
+          top = $scope.topNeighborExists,
+          bottom = $scope.bottomNeighborExists,
+          left = $scope.leftNeighborExists,
+          right = $scope.rightNeighborExists,
+          rowMin = row,
+          rowMax = row,
+          rowIndex = null,
+          colMin = col,
+          colMax = col,
+          colIndex = null,
+          liveNeighbors = 0;
+
+      if (top) {
+        rowMin -= 1;
+      }
+
+      if (bottom) {
+        rowMax += 1;
+      }
+
+      if (left) {
+        colMin -= 1;
+      }
+
+      if (right) {
+        colMax += 1;
+      }
+
+      for (rowIndex = rowMin; rowIndex <= rowMax; rowIndex++) {
+        for (colIndex = colMin; colIndex <= colMax; colIndex++) {
+          // Continue to next iteration if index equals the cell itself
+          if (rowIndex === row && colIndex === col) {
+            continue;
+          }
+
+          liveNeighbors += board[rowIndex][colIndex];
+        }
+      }
+
+      return liveNeighbors;
     };
 
     // Init main flow

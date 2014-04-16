@@ -508,4 +508,172 @@ describe('Controller: MainCtrl', function () {
 
   });
 
+  describe('When the neighbor cell values are summed', function () {
+
+    var cellsArray = null;
+
+    beforeEach(function () {
+      var cellsArraySize = 5,
+          liveCell = 1,
+          row = null,
+          col = null;
+
+      cellsArray = new Array(cellsArraySize);
+
+      for (row = 0; row < cellsArraySize; row++) {
+        cellsArray[row] = new Array(cellsArraySize);
+
+        for (col = 0; col < cellsArraySize; col++) {
+          cellsArray[row][col] = liveCell;
+        }
+      }
+    });
+
+    /*
+     POSSIBLE NEIGHBOR PERMUTATIONS
+      T - B - L - R
+      T - B - L
+      T - B -   - R
+      T -   - L - R
+      T -   - L
+      T -   -   - R
+          B - L - R
+          B - L
+          B -   - R
+    */
+
+    it('should sum for the top, bottom, left, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(2, 2);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(2, 2);
+
+      // Assert
+      expect(liveNeighbors).to.equal(8);
+    });
+
+    it('should sum for the top, bottom, left neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null,
+          colMax = scope.MAX_COL - 1;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(2, colMax);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(2, colMax);
+
+      // Assert
+      expect(liveNeighbors).to.equal(5);
+    });
+
+    it('should sum for the top, bottom, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(2, 0);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(2, 0);
+
+      // Assert
+      expect(liveNeighbors).to.equal(5);
+    });
+
+    it('should sum for the top, left, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null,
+          rowMax = scope.MAX_ROW - 1;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(rowMax, 2);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(rowMax, 2);
+
+      // Assert
+      expect(liveNeighbors).to.equal(5);
+    });
+
+    it('should sum for the top, left neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null,
+          rowMax = scope.MAX_ROW - 1,
+          colMax = scope.MAX_COL - 1;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(rowMax, colMax);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(rowMax, colMax);
+
+      // Assert
+      expect(liveNeighbors).to.equal(3);
+    });
+
+    it('should sum for the top, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null,
+          rowMax = scope.MAX_ROW - 1;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(rowMax, 0);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(rowMax, 0);
+
+      // Assert
+      expect(liveNeighbors).to.equal(3);
+    });
+
+    it('should sum for the bottom, left, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(0, 2);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(0, 2);
+
+      // Assert
+      expect(liveNeighbors).to.equal(5);
+    });
+
+    it('should sum for the bottom, left neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null,
+          colMax = scope.MAX_COL - 1;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(0, colMax);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(0, colMax);
+
+      // Assert
+      expect(liveNeighbors).to.equal(3);
+    });
+
+    it('should sum for the bottom, right neighbor permutation', function () {
+      // Arrange
+      var liveNeighbors = null;
+
+      scope.parentGenerationBoard = cellsArray;
+      scope.verifyNeighborCellsExist(0, 0);
+
+      // Act
+      liveNeighbors = scope.sumNeighborCellValues(0, 0);
+
+      // Assert
+      expect(liveNeighbors).to.equal(3);
+    });
+
+  });
+
 });
