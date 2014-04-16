@@ -19,7 +19,7 @@ angular.module('gameOfLifeApp', [
       $scope.MIN_COL = 0;
       $scope.MAX_COL = 5;
       $scope.DEAD_CELL = 0;
-      $scope.LIVE_CELL = 0;
+      $scope.LIVE_CELL = 1;
     };
 
     /* Initialize gameBoard array */
@@ -74,9 +74,25 @@ angular.module('gameOfLifeApp', [
     };
 
     /* Logic to determine cell values of evolution generation */
-    $scope.evolveCell = function (row, col) {
+    $scope.evolveCell = function (row, col, cell) {
+      var deadCell = $scope.DEAD_CELL;
+
+      // Verify which neighbor cells exist in the game board array
       $scope.verifyNeighborCellsExist(row, col);
 
+      // If cell equals dead or else alive
+      if (cell === deadCell) {
+        return $scope.evolveDeadCell();
+      } else {
+        return $scope.evolveLiveCell();
+      }
+    };
+
+    $scope.evolveDeadCell = function () {
+      return 0;
+    };
+
+    $scope.evolveLiveCell = function () {
       return 1;
     };
 

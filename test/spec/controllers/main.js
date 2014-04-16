@@ -31,7 +31,7 @@ describe('Controller: MainCtrl', function () {
       expect(scope.MIN_COL).to.equal(0);
       expect(scope.MAX_COL).to.equal(5);
       expect(scope.DEAD_CELL).to.equal(0);
-      expect(scope.LIVE_CELL).to.equal(0);
+      expect(scope.LIVE_CELL).to.equal(1);
     });
 
   });
@@ -62,20 +62,23 @@ describe('Controller: MainCtrl', function () {
 
     it('should populate each game board cell with a value of 0 or 1', function () {
       // Arrange
-      var GAME_BOARD_SIZE = 5,
+      var rowSize = scope.ROW_SIZE,
+          colSize = scope.COL_SIZE,
           gameBoard = null,
           row = null,
-          col = null;
+          col = null,
+          cell = null;
 
       // Act
       scope.initGameBoard();
       gameBoard = scope.gameBoards[0];
 
       // Assert
-      for (row = 0; row < GAME_BOARD_SIZE; row++) {
-        for (col = 0; col < GAME_BOARD_SIZE; col++) {
-          expect(gameBoard[row][col]).to.be.at.least(0);
-          expect(gameBoard[row][col]).to.be.at.most(1);
+      for (row = 0; row < rowSize; row++) {
+        for (col = 0; col < colSize; col++) {
+          cell = gameBoard[row][col];
+          expect(cell).to.be.at.least(0);
+          expect(cell).to.be.at.most(1);
         }
       }
     });
@@ -119,25 +122,27 @@ describe('Controller: MainCtrl', function () {
       expect(newGameBoardsLength).to.equal(gameBoardsLength + 1);
     });
 
-    it('should evolve each cell in the new game board to a value of 1', function () {
+    it('should send each cell with its row and col to the evolveCell method', function () {
       // Arrange
-      var GAME_BOARD_SIZE = 5,
+      var rowSize = scope.ROW_SIZE,
+          colSize = scope.COL_SIZE,
           gameBoardsLength = null,
           gameBoard = null,
           row = null,
-          col = null;
+          col = null,
+          cell = null;
 
       scope.initGameBoard();
-      gameBoardsLength = scope.gameBoards.length;
 
       // Act
       scope.createNewGeneration();
       gameBoard = scope.gameBoards[gameBoardsLength];
 
       // Assert
-      for (row = 0; row < GAME_BOARD_SIZE; row++) {
-        for (col = 0; col < GAME_BOARD_SIZE; col++) {
-          expect(gameBoard[row][col]).to.equal(1);
+      for (row = 0; row < rowSize; row++) {
+        for (col = 0; col < colSize; col++) {
+          cell = gameBoard[row][col];
+          expect(scope.evolveCell.calledWith(row, col, cell)).to.be.true;
         }
       }
     });
@@ -146,7 +151,7 @@ describe('Controller: MainCtrl', function () {
 
   describe('When the evolveCell method is called to evolve an individual cell generation', function () {
 
-    it('should call verifyNeighborCellsExist method to verify which neighbor cells exist for the given row and col', function () {
+    it('should call verifyNeighborCellsExist method to verify which neighbor cells exist for the row and col of the cell', function () {
       // Arrange
       spy(scope, 'verifyNeighborCellsExist');
 
@@ -158,23 +163,74 @@ describe('Controller: MainCtrl', function () {
       expect(scope.verifyNeighborCellsExist.calledWith(0, 0)).to.be.true;
     });
 
-    it('should return a value of 1', function () {
+    describe('And given the cell is dead', function () {
+
+      it('should return the value returned from the evolveDeadCell method', function () {
+        var cell = scope.DEAD_CELL,
+            genCell = null,
+            genDeadCell = null;
+
+        // Act
+        genCell = scope.evolveCell(0, 0, cell);
+        genDeadCell = scope.evolveDeadCell();
+
+        // Assert
+        expect(genCell).to.equal(genDeadCell);
+      });
+
+    });
+
+    describe('And given the cell is live', function () {
+
+      it('should return the value returned from the evolveLiveCell method', function () {
+        var cell = scope.LIVE_CELL,
+            genCell = null,
+            genLiveCell = null;
+
+        // Act
+        genCell = scope.evolveCell(0, 0, cell);
+        genLiveCell = scope.evolveLiveCell();
+
+        // Assert
+        expect(genCell).to.equal(genLiveCell);
+      });
+
+    });
+
+  });
+
+  describe('When the evolveDeadCell method is called to evolve the value of a dead cell', function () {
+
+    it('should only return a value of 0 or 1', function () {
       // Arrange
       var cell = null;
 
       // Act
-      cell = scope.evolveCell();
+      cell = scope.evolveLiveCell();
 
       // Assert
-      expect(cell).to.equal(1);
+      expect(cell).to.be.at.least(0);
+      expect(cell).to.be.at.most(1);
     });
 
-    it.skip('should return a value of 0 to equal a dead cell', function () {
+    it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
 
     });
 
-    it.skip('should return a value of 1 to equal a live cell', function () {
+  });
 
+  describe('When the evolveLiveCell method is called to evolve the value of a live cell', function () {
+
+    it('should only return a value of 0 or 1', function () {
+      // Arrange
+      var cell = null;
+
+      // Act
+      cell = scope.evolveLiveCell();
+
+      // Assert
+      expect(cell).to.be.at.least(0);
+      expect(cell).to.be.at.most(1);
     });
 
     it.skip('should return a dead cell value if a live cell has fewer than two live neighbors', function () {
@@ -189,11 +245,8 @@ describe('Controller: MainCtrl', function () {
 
     });
 
-    it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
-
-    });
-
   });
+
 
   describe('When the verifyNeighborExists method is called', function () {
 
