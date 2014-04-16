@@ -9,7 +9,6 @@ npm-debug.log
 
 # Directories
 node_modules
-dist
 assets
 app/bower_components
 .tmp
