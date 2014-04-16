@@ -99,8 +99,15 @@ angular.module('gameOfLifeApp', [
       return deadCell;
     };
 
-    $scope.evolveLiveCell = function () {
-      return 1;
+    $scope.evolveLiveCell = function (neighbors) {
+      var deadCell = $scope.DEAD_CELL,
+          liveCell = $scope.LIVE_CELL;
+
+      if (neighbors === 2 || neighbors === 3) {
+        return liveCell;
+      }
+
+      return deadCell
     };
 
     $scope.verifyNeighborCellsExist = function (row, col) {

@@ -235,14 +235,22 @@ describe('Controller: MainCtrl', function () {
 
     it('should only return a value of 0 or 1', function () {
       // Arrange
-      var cell = null;
+      var cells = [],
+          cellsLength = null,
+          index = null;
 
       // Act
-      cell = scope.evolveLiveCell();
+      cells[0] = scope.evolveLiveCell(0);
+      cells[1] = scope.evolveLiveCell(1);
+      cells[2] = scope.evolveLiveCell(2);
+      cells[3] = scope.evolveLiveCell(3);
+      cells[4] = scope.evolveLiveCell(8);
 
       // Assert
-      expect(cell).to.be.at.least(0);
-      expect(cell).to.be.at.most(1);
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.be.at.least(0);
+        expect(cells[index]).to.be.at.most(1);
+      }
     });
 
     it.skip('should return a dead cell value if a live cell has fewer than two live neighbors', function () {
