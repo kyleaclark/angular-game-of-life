@@ -214,6 +214,8 @@ describe('Controller: MainCtrl', function () {
       cells[3] = scope.evolveDeadCell(3);
       cells[4] = scope.evolveDeadCell(8);
 
+      cellsLength = cells.length;
+
       // Assert
       for (index = 0; index < cellsLength; index++) {
         expect(cells[index]).to.be.at.least(0);
@@ -248,6 +250,8 @@ describe('Controller: MainCtrl', function () {
       cells[3] = scope.evolveDeadCell(4);
       cells[4] = scope.evolveDeadCell(8);
 
+      cellsLength = cells.length;
+
       // Assert
       for (index = 0; index < cellsLength; index++) {
         expect(cells[index]).to.equal(deadCell);
@@ -271,6 +275,8 @@ describe('Controller: MainCtrl', function () {
       cells[3] = scope.evolveLiveCell(3);
       cells[4] = scope.evolveLiveCell(8);
 
+      cellsLength = cells.length;
+
       // Assert
       for (index = 0; index < cellsLength; index++) {
         expect(cells[index]).to.be.at.least(0);
@@ -278,16 +284,63 @@ describe('Controller: MainCtrl', function () {
       }
     });
 
-    it.skip('should return a dead cell value if a live cell has fewer than two live neighbors', function () {
+    it('should return a dead cell value if a live cell has fewer than two live neighbors', function () {
+      // Arrange
+      var deadCell = scope.DEAD_CELL,
+          cells = [],
+          cellsLength = null,
+          index = null;
 
+      // Act
+      cells[0] = scope.evolveLiveCell(0);
+      cells[1] = scope.evolveLiveCell(1);
+      cells[2] = scope.evolveLiveCell(-1);
+
+      cellsLength = cells.length;
+
+      // Assert
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.equal(deadCell);
+      }
     });
 
-    it.skip('should return a live cell value if a live cell has two or three live neighbors', function () {
+    it('should return a live cell value if a live cell has two or three live neighbors', function () {
+      // Arrange
+      var liveCell = scope.LIVE_CELL,
+          cells = [],
+          cellsLength = null,
+          index = null;
 
+      // Act
+      cells[0] = scope.evolveLiveCell(2);
+      cells[1] = scope.evolveLiveCell(3);
+
+      cellsLength = cells.length;
+
+      // Assert
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.equal(liveCell);
+      }
     });
 
-    it.skip('should return a dead cell value if a live cell has more than three live neighbors', function () {
+    it('should return a dead cell value if a live cell has more than three live neighbors', function () {
+      // Arrange
+      var deadCell = scope.DEAD_CELL,
+          cells = [],
+          cellsLength = null,
+          index = null;
 
+      // Act
+      cells[0] = scope.evolveLiveCell(4);
+      cells[1] = scope.evolveLiveCell(5);
+      cells[2] = scope.evolveLiveCell(8);
+
+      cellsLength = cells.length;
+
+      // Assert
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.equal(deadCell);
+      }
     });
 
   });
