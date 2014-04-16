@@ -66,28 +66,30 @@ Run "npm install" to install project dependencies from package.json:
 npm install
 ```
 
-Run "bower update" to resolve Bower dependencies
+Run "bower update" to resolve Bower package
 
 ```
 bower update
 ```
-
-If issues installing node packages, try the solution below. Otherwise, continue to the Prepare step.
-
-```
-rm -rf node_modules
-sudo npm cache clean
-sudo npm install
-sudo bower update
-```
-
-##Run Prepare
 
 Run "grunt prepare" to install project dependencies from bower.json.
 
 ```
 grunt prepare
 ```
+
+If issues installing node packages, try the solution below.
+
+```
+rm -rf node_modules
+sudo npm cache clean
+sudo npm install
+sudo bower update
+grunt prepare
+```
+
+If issues running the project persist, verify your dependencies meet the project needs and repeat Setup in a fresh, cloned repo.
+
 
 ##Run Dev-Mode
 
