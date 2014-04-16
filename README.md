@@ -40,15 +40,12 @@ Install Compass / Sass dependencies (Ruby, Compass) [gem update --system && gem 
 
 ```
 ~ https://github.com/gruntjs/grunt-contrib-compass
-```
 
-#####Note: See the http://stackoverflow.com/questions/21079342/cant-use-compass-after-installing-it selected answer for a description of potential Compass / Sass compatibility issues.
+** Note: See the http://stackoverflow.com/questions/21079342/cant-use-compass-after-installing-it selected answer for a description of potential Compass / Sass compatibility issues.
 
-#####Recommend Compass and Sass gem versions:
-
-```
-compass-0.12.5
-sass-3.2.19
+** Recommended Compass and Sass gem versions:
+~~ compass-0.12.5
+~~ sass-3.2.19
 ```
 
 ##Setup
