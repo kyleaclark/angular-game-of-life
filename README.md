@@ -69,7 +69,7 @@ npm install
 Run "bower update" to resolve Bower dependencies
 
 ```
-npm install
+bower update
 ```
 
 If issues installing node packages, try the solution below. Otherwise, continue to the Prepare step.
@@ -78,7 +78,7 @@ If issues installing node packages, try the solution below. Otherwise, continue 
 rm -rf node_modules
 sudo npm cache clean
 sudo npm install
-sudo bower install
+sudo bower update
 ```
 
 ##Run Prepare
