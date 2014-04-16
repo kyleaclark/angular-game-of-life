@@ -78,7 +78,7 @@ Run "grunt prepare" to install project dependencies from bower.json.
 grunt prepare
 ```
 
-If issues installing node packages, try the solution below.
+If issues installing node packages or running the project, try the solution below before running again.
 
 ```
 rm -rf node_modules
