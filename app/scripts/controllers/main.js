@@ -6,10 +6,10 @@ angular.module('gameOfLifeApp', [
     .controller('MainCtrl', function ($scope, CommonArrayService) {
 
     /* Init main flow */
-    function init() {
+    $scope.init = function () {
       $scope.initVars();
-      $scope.initGameBoard();
-    }
+      $scope.createRandomGameBoard();
+    };
 
     /* Init vars within scope */
     $scope.initVars = function () {
@@ -22,8 +22,23 @@ angular.module('gameOfLifeApp', [
       $scope.LIVE_CELL = 1;
     };
 
+    $scope.createRandomGameBoard = function () {
+      var cellsArraySize = $scope.MAX_ROW * $scope.MAX_COL,
+          cellsArray = new Array(cellsArraySize),
+          cellsArrayLength = cellsArray.length,
+          index = null;
+
+      for (index = 0; index < cellsArrayLength; index++) {
+        // Round number to a random generation between 0 < 1
+        cellsArray[index] = Math.round(Math.random());
+      }
+
+      $scope.randomGameBoard = cellsArray;
+      $scope.initGameBoard(cellsArray);
+    };
+
     /* Initialize gameBoard array */
-    $scope.initGameBoard = function () {
+    $scope.initGameBoard = function (cellsArray) {
       var GAME_BOARD_SIZE = $scope.GAME_BOARD_SIZE,
           row = null,
           col = null,
@@ -37,7 +52,7 @@ angular.module('gameOfLifeApp', [
 
         for (col = 0; col < maxCol; col++) {
           // Round number to a random generation between 0 < 1
-          gameBoard[row][col] = Math.round(Math.random());
+          gameBoard[row][col] = cellsArray[row + col];
         }
       }
 
@@ -88,22 +103,22 @@ angular.module('gameOfLifeApp', [
       }
     };
 
-    $scope.evolveDeadCell = function (neighbors) {
+    $scope.evolveDeadCell = function (liveNeighbors) {
       var deadCell = $scope.DEAD_CELL,
           liveCell = $scope.LIVE_CELL;
 
-      if (neighbors === 3) {
+      if (liveNeighbors === 3) {
         return liveCell;
       }
 
       return deadCell;
     };
 
-    $scope.evolveLiveCell = function (neighbors) {
+    $scope.evolveLiveCell = function (liveNeighbors) {
       var deadCell = $scope.DEAD_CELL,
           liveCell = $scope.LIVE_CELL;
 
-      if (neighbors === 2 || neighbors === 3) {
+      if (liveNeighbors === 2 || liveNeighbors === 3) {
         return liveCell;
       }
 
@@ -139,5 +154,5 @@ angular.module('gameOfLifeApp', [
     };
 
     // Init main flow
-    init();
+    $scope.init();
   });
