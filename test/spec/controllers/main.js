@@ -203,17 +203,29 @@ describe('Controller: MainCtrl', function () {
 
     it('should only return a value of 0 or 1', function () {
       // Arrange
-      var cell = null;
+      var cells = [],
+          cellsLength = null,
+          index = null;
 
       // Act
-      cell = scope.evolveLiveCell();
+      cells[0] = scope.evolveDeadCell(0);
+      cells[1] = scope.evolveDeadCell(1);
+      cells[2] = scope.evolveDeadCell(2);
+      cells[3] = scope.evolveDeadCell(3);
+      cells[4] = scope.evolveDeadCell(8);
 
       // Assert
-      expect(cell).to.be.at.least(0);
-      expect(cell).to.be.at.most(1);
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.be.at.least(0);
+        expect(cells[index]).to.be.at.most(1);
+      }
     });
 
     it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
+
+    });
+
+    it.skip('should return a dead cell value if a dead cell does not have exactly three live neighbors', function () {
 
     });
 

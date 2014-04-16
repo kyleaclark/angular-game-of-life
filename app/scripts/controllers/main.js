@@ -88,8 +88,15 @@ angular.module('gameOfLifeApp', [
       }
     };
 
-    $scope.evolveDeadCell = function () {
-      return 0;
+    $scope.evolveDeadCell = function (neighbors) {
+      var deadCell = $scope.DEAD_CELL,
+          liveCell = $scope.LIVE_CELL;
+
+      if (neighbors === 3) {
+        return liveCell;
+      }
+
+      return deadCell;
     };
 
     $scope.evolveLiveCell = function () {
