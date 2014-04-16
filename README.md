@@ -11,37 +11,48 @@ April 2014
 
 AngularJS application : evolves generations of dead or alive cells in a game board
 
-##Setup
+##Dependencies
 
 [Setup instructions default to Mac OS X environment, but setup should be possible in Windows and Linux, too]
 
 Install Node dependencies (Node, NPM, NVM) [Node compatible version >= 0.10.0 < 0.11.0]
 
 ```
-refer to http://nodejs.org, https://www.npmjs.org/, https://github.com/creationix/nvm
+~ http://nodejs.org
+~ https://www.npmjs.org/
+~ https://github.com/creationix/nvm
 ```
 
 Install Grunt dependencies [npm install -g grunt-cli]
 
 ```
-refer to http://gruntjs.com/getting-started
+~ http://gruntjs.com/getting-started
 ```
 
 Install Bower dependencies [npm install -g bower, Git via http://git-scm.com]
 
 ```
-refer to http://bower.io/
+~ http://bower.io
+~ http://git-scm.com
 ```
 
 Install Compass / Sass dependencies (Ruby, Compass) [gem update --system && gem install compass]
 
 ```
-refer to https://github.com/gruntjs/grunt-contrib-compass
+~ https://github.com/gruntjs/grunt-contrib-compass
+
+** Note: See the http://stackoverflow.com/questions/21079342/cant-use-compass-after-installing-it selected answer for a description of potential Compass / Sass compatibility issues.
+
+** Recommended Compass and Sass gem versions:
+~~ compass-0.12.5
+~~ sass-3.2.19
 ```
 
-##Build
+##Setup
 
 Clone repo to local.
+
+Then, from terminal cd (change directory) to the local repo directory to proceed with the project build below:
 
 Use correct nvm version >= 0.10.0 < 0.11.0 (version 0.10.26 recommended) e.g.:
 
@@ -55,20 +66,30 @@ Run "npm install" to install project dependencies from package.json:
 npm install
 ```
 
-If issues installing node packages, try the solution below. Otherwise, continue to the Prepare step.
+Run "bower update" to resolve Bower package
 
 ```
-sudo npm cache clean
-sudo npm install
+bower update
 ```
-
-##Run Prepare
 
 Run "grunt prepare" to install project dependencies from bower.json.
 
 ```
 grunt prepare
 ```
+
+If issues installing node packages or running the project, try the solution below before running again.
+
+```
+rm -rf node_modules
+sudo npm cache clean
+sudo npm install
+sudo bower update
+grunt prepare
+```
+
+If issues running the project persist, verify your dependencies meet the project needs and repeat Setup in a fresh, cloned repo.
+
 
 ##Run Dev-Mode
 
