@@ -221,12 +221,37 @@ describe('Controller: MainCtrl', function () {
       }
     });
 
-    it.skip('should return a live cell value if a dead cell has exactly three live neighbors', function () {
+    it('should return a live cell value if a dead cell has exactly three live neighbors', function () {
+      // Arrange
+      var liveCell = scope.LIVE_CELL,
+          neighbors = 3,
+          cell = null;
 
+      // Act
+      cell = scope.evolveDeadCell(neighbors);
+
+      // Assert
+      expect(cell).to.equal(liveCell);
     });
 
-    it.skip('should return a dead cell value if a dead cell does not have exactly three live neighbors', function () {
+    it('should return a dead cell value if a dead cell does not have exactly three live neighbors', function () {
+      // Arrange
+      var deadCell = scope.DEAD_CELL,
+          cells = [],
+          cellsLength = null,
+          index = null;
 
+      // Act
+      cells[0] = scope.evolveDeadCell(0);
+      cells[1] = scope.evolveDeadCell(1);
+      cells[2] = scope.evolveDeadCell(2);
+      cells[3] = scope.evolveDeadCell(4);
+      cells[4] = scope.evolveDeadCell(8);
+
+      // Assert
+      for (index = 0; index < cellsLength; index++) {
+        expect(cells[index]).to.equal(deadCell);
+      }
     });
 
   });
