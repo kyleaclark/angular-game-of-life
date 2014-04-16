@@ -89,16 +89,19 @@ angular.module('gameOfLifeApp', [
 
     /* Logic to determine cell values of evolution generation */
     $scope.evolveCell = function (row, col, cell) {
-      var deadCell = $scope.DEAD_CELL;
+      var deadCell = $scope.DEAD_CELL,
+          liveNeighbors = null;
 
       // Verify which neighbor cells exist in the game board array
       $scope.verifyNeighborCellsExist(row, col);
 
+      liveNeighbors = $scope.sumNeighborCellValues(row, col);
+
       // If cell equals dead or else alive
       if (cell === deadCell) {
-        return $scope.evolveDeadCell();
+        return $scope.evolveDeadCell(liveNeighbors);
       } else {
-        return $scope.evolveLiveCell();
+        return $scope.evolveLiveCell(liveNeighbors);
       }
     };
 

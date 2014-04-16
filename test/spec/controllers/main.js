@@ -241,9 +241,30 @@ describe('Controller: MainCtrl', function () {
 
   describe('When the evolveCell method is called to evolve an individual cell generation', function () {
 
+    var cellsArray = null;
+
+    beforeEach(function () {
+      var cellsArraySize = 5,
+          liveCell = 1,
+          row = null,
+          col = null;
+
+      cellsArray = new Array(cellsArraySize);
+
+      for (row = 0; row < cellsArraySize; row++) {
+        cellsArray[row] = new Array(cellsArraySize);
+
+        for (col = 0; col < cellsArraySize; col++) {
+          cellsArray[row][col] = liveCell;
+        }
+      }
+    });
+
     it('should call verifyNeighborCellsExist method to verify which neighbor cells exist for the row and col of the cell', function () {
       // Arrange
       spy(scope, 'verifyNeighborCellsExist');
+
+      scope.parentGenerationBoard = cellsArray;
 
       // Act
       scope.evolveCell(0, 0);
@@ -253,16 +274,34 @@ describe('Controller: MainCtrl', function () {
       expect(scope.verifyNeighborCellsExist.calledWith(0, 0)).to.be.true;
     });
 
+    it('should call sumNeighborCellValues method to get the live neighbors value for the row and col of the cell', function () {
+      // Arrange
+      spy(scope, 'sumNeighborCellValues');
+
+      scope.parentGenerationBoard = cellsArray;
+
+      // Act
+      scope.evolveCell(0, 0);
+
+      // Assert
+      expect(scope.sumNeighborCellValues.calledOnce).to.be.true;
+      expect(scope.sumNeighborCellValues.calledWith(0, 0)).to.be.true;
+    });
+
     describe('And given the cell is dead', function () {
 
       it('should return the value returned from the evolveDeadCell method', function () {
         var cell = scope.DEAD_CELL,
             genCell = null,
-            genDeadCell = null;
+            genDeadCell = null,
+            liveNeighbors = 0;
+
+        scope.parentGenerationBoard = cellsArray;
 
         // Act
         genCell = scope.evolveCell(0, 0, cell);
-        genDeadCell = scope.evolveDeadCell();
+        liveNeighbors = scope.sumNeighborCellValues(0, 0);
+        genDeadCell = scope.evolveDeadCell(liveNeighbors);
 
         // Assert
         expect(genCell).to.equal(genDeadCell);
@@ -275,11 +314,15 @@ describe('Controller: MainCtrl', function () {
       it('should return the value returned from the evolveLiveCell method', function () {
         var cell = scope.LIVE_CELL,
             genCell = null,
-            genLiveCell = null;
+            genLiveCell = null,
+            liveNeighbors = 0;
+
+        scope.parentGenerationBoard = cellsArray;
 
         // Act
         genCell = scope.evolveCell(0, 0, cell);
-        genLiveCell = scope.evolveLiveCell();
+        liveNeighbors = scope.sumNeighborCellValues(0, 0);
+        genLiveCell = scope.evolveLiveCell(liveNeighbors);
 
         // Assert
         expect(genCell).to.equal(genLiveCell);
