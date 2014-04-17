@@ -1,0 +1,45 @@
+/*=============================
+  COLORS
+-------------------------------*/
+
+$white: #f7f7f3;
+$black: #0B0800;
+
+$aqua: #5eb4aa;
+$aquaDark: darken($aqua, 15%);
+$aquaLight: lighten($aqua, 15%);
+$aquaLightest: lighten($aqua, 20%);
+
+$gray: #6a6a6a;
+$grayDark: darken($gray, 15%);
+$grayDarkest: darken($gray, 20%);
+$grayLight: lighten($gray, 15%);
+$grayLightest: lighten($gray, 20%);
+
+/*=============================
+  THEME COLORS
+-------------------------------*/
+
+/* Base color sets for content */
+
+$colorBg: $black;
+
+$colorText: $grayLight;
+
+/*=============================
+  FONT SIZES
+-------------------------------*/
+
+$fontSizeTiny: 0.50em;
+$fontSizeSmaller: 0.75em;
+$fontSizeSmall: 0.85em;
+$fontSizeDefault: 1.00em;
+$fontSizeBig: 1.15em;
+$fontSizeBigger: 1.25em;
+$fontSizeHuge: 1.50em;
+
+/*=============================
+  BODY SIZES
+-------------------------------*/
+
+$bodySizeDesktop: 800px;

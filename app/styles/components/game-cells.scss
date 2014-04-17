@@ -1,0 +1,11 @@
+@import "../_global.scss";
+
+/* --- [ Game Cells ] --- */
+
+.cell {
+  color: $gray;
+}
+
+.cell-live {
+  color: $aqua;
+}

@@ -1,0 +1,41 @@
+@import "../_global.scss";
+
+/* --- [ Game Board ] --- */
+
+.game-board {
+  padding: 5px;
+  border: 1px solid #ccc;
+  margin: 25px auto;
+  padding-bottom: 8px;
+  width: 250px;
+
+  h4 {
+    margin: 3px 0 5px;
+    padding: 0;
+  }
+}
+
+.game-board-row {
+  margin: 0;
+  padding: 0;
+}
+
+.game-board-cell {
+  display: inline-block;
+  height: 25px;
+  list-style-type: none;
+  margin: 8px 8px 0;
+  width: 25px
+}
+
+.add-generation-btn {
+  background-color: $grayDarkest;
+  border: 2px solid $grayLight;
+  color: $grayLight;
+  font-weight: bold;
+  outline: none;
+}
+
+.add-generation-btn:hover {
+  background-color: $grayDark;
+}
