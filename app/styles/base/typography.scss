@@ -1,0 +1,41 @@
+@import "../_global.scss";
+
+/* --- [ Typography ] --- */
+
+body {
+  color: $colorText;
+  font: 400 16px/1.4 "Courier New", courier, monospace;
+  -webkit-font-smoothing: antialiased;
+     -moz-font-smoothing: antialiased;
+          font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  @include apply-to(max-width, 960px) {
+    font-size: 14px;
+  }
+}
+
+h1, .h1   { font-size: $fontSizeHuge; }
+h2, .h2   { font-size: $fontSizeBigger; }
+h3, .h3   { font-size: $fontSizeBig; }
+h4, .h4   { font-size: $fontSizeDefault; }
+h5, .h5   { font-size: $fontSizeSmall; }
+h6, .h6   { font-size: $fontSizeSmaller; }
+
+h1, .h1 {
+  color: $aquaDark;
+  border-bottom: 1px solid $aquaDark;
+  font-weight: bold;
+}
+
+h3, .h3 {
+  color: $aqua;
+  font-weight: bold;
+}
+
+.huge-text {
+  font-size: $fontSizeHuge;
+}
+
+p, li, span {
+  font-size: 18px;
+}

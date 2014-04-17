@@ -1,0 +1,35 @@
+@import "../_global.scss";
+
+/* --- [ Layout ] --- */
+
+/* Apply a natural box layout model to all elements */
+*, 
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: $colorBg;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+
+  /* Tablet Media Query */
+  @include apply-to(min-width, $bodySizeDesktop) {
+    width: $bodySizeDesktop;
+  }
+}
+
+header, footer, section {
+  margin: 0 auto;
+  text-align: center;
+}
+
+footer {
+  border-top: 1px solid #ccc;
+  margin-top: 25px;
+}

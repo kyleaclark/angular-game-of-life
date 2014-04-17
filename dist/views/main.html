@@ -1,15 +1,1 @@
-<div class="header"><h3 class="text-muted">Game of Life</h3></div><div class="row marketing"><p>Game of Life is similar to Game of Thrones, except they're not really the same.</p><p>Evolve generations of dead or alive cells in a game board</p><p>The game of life follows the rules below:</p><ol><li>Any live cell with fewer than two live neighbours dies (under-population)</li><li>Any live cell with two or three live neighbours lives on to the next generation (survival)</li><li>Any live cell with more than three live neighbours dies (overcrowding)</li><li>Any dead cell with exactly three live neighbours becomes a live cell (reproduction)</li><li>Each cell lives or dies independently (not sequentially) in a generational evolution</li></ol></div><div class="jumbotron"><div class="game-board" ng-repeat="gameBoard in gameBoards track by $index"><h4>Generation {{$index + 1}}</h4><ul class="game-board-row" ng-repeat="row in gameBoard track by $index"><li class="game-board-cell" ng-repeat="cell in row track by $index">{{cell}}</li></ul></div></div><button ng-click="createNewGeneration()">Add New Generation</button><div class="footer"><p>Game of Life</p></div><!--
-
-0 1 0 0 0
-1 0 0 1 1
-1 1 0 0 1
-0 1 0 0 0
-1 0 0 0 1
-
-0 0 0 0 0
-1 0 1 1 1
-1 1 1 1 1
-0 1 0 0 0
-0 0 0 0 0
-
--->
+<header class="header"><h1>game <span class="huge-text">0</span>f l<span class="huge-text">1</span>fe</h1></header><section class="game-intro"><h3>Evolve generations of dead or alive cells in a game board</h3><p>Game of Life is similar to Game of Thrones,<br>except they're not really the same.</p><h4>The game of life follows the rules below:</h4><ol class="game-rules-list"><li>Any live cell with fewer than two live neighbours dies (under-population)</li><li>Any live cell with two or three live neighbours lives on to the next generation (survival)</li><li>Any live cell with more than three live neighbours dies (overcrowding)</li><li>Any dead cell with exactly three live neighbours becomes a live cell (reproduction)</li><li>Each cell lives or dies independently (not sequentially) in a generational evolution</li></ol></section><section class="game-play"><div class="game-board" ng-repeat="gameBoard in gameBoards track by $index"><h4>Generation {{$index + 1}}</h4><ul class="game-board-row" ng-repeat="row in gameBoard track by $index"><li class="game-board-cell" ng-repeat="cell in row track by $index"><span class="cell" ng-class="{'cell-live': cell === 1}">{{cell}}</span></li></ul></div><button class="add-generation-btn" ng-click="createNewGeneration()">Add New Generation</button></section><footer class="footer"><p>Game of Life</p></footer>

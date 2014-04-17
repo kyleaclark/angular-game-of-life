@@ -1,0 +1,12 @@
+/*=============================
+  FORMULAS
+-------------------------------*/
+
+/* Media query */
+@mixin apply-to($ltgt, $width) {
+
+  @media only screen and (#{$ltgt}: $width){
+    @content;
+  }
+
+}
