@@ -177,6 +177,36 @@ describe('Controller: MainCtrl', function () {
       }
     });
 
+    it('should set the value of generations to 1', function () {
+      // Arrange
+      var cellValues = null;
+
+      scope.createRandomGameBoard();
+      cellValues = scope.randomGameBoard;
+
+      // Act
+      scope.initGameBoard(cellValues);
+
+      // Assert
+      expect(scope.generations).to.equal(1);
+    });
+
+    it('should make a method call to update the game board display', function () {
+      // Arrange
+      var cellValues = null;
+
+      scope.createRandomGameBoard();
+      cellValues = scope.randomGameBoard;
+
+      spy(scope, 'updateGameBoardDisplay');
+
+      // Act
+      scope.initGameBoard(cellValues);
+
+      // Assert
+      expect(scope.updateGameBoardDisplay.calledOnce).to.be.true;
+    });
+
   });
 
   describe('When creating a new generation on the game board', function () {
@@ -235,6 +265,28 @@ describe('Controller: MainCtrl', function () {
           expect(scope.evolveCell.calledWith(row, col, cell)).to.be.true;
         }
       }
+    });
+
+    it('should set the value of generations to plus 1', function () {
+      // Arrange
+      var generationsPlusOne = scope.generations + 1;
+
+      // Act
+      scope.createNewGeneration();
+
+      // Assert
+      expect(scope.generations).to.equal(generationsPlusOne);
+    });
+
+    it('should make a method call to update the game board display', function () {
+      // Arrange
+      spy(scope, 'updateGameBoardDisplay');
+
+      // Act
+      scope.createNewGeneration();
+
+      // Assert
+      expect(scope.updateGameBoardDisplay.calledOnce).to.be.true;
     });
 
   });

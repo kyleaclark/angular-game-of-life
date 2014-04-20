@@ -59,6 +59,14 @@ angular.module('gameOfLifeApp', [
       // Init empty gameBoards array and push initial randomized gameBoard to gameBoards
       $scope.gameBoards = [];
       $scope.gameBoards.push(gameBoard);
+      $scope.generations = 1;
+      $scope.updateGameBoardDisplay();
+    };
+
+    $scope.updateGameBoardDisplay = function () {
+      var lastGameBoard = $scope.gameBoards.length - 1;
+
+      $scope.gameBoard = $scope.gameBoards[lastGameBoard];
     };
 
     /* Create a new generation of cell values to push to gameBoards array */
@@ -85,6 +93,8 @@ angular.module('gameOfLifeApp', [
 
       // Push new childGeneration game board to gameBoards
       $scope.gameBoards.push(childGenerationBoard);
+      $scope.generations += 1;
+      $scope.updateGameBoardDisplay();
     };
 
     /* Logic to determine cell values of evolution generation */
