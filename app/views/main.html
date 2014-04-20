@@ -16,8 +16,8 @@
 </section>
 
 <section class="game-play">
-  <div class="game-board" ng-repeat="gameBoard in gameBoards track by $index">
-    <h4>Generation {{$index + 1}}</h4>
+  <div class="game-board">
+    <h4>Generations {{generations}}</h4>
     <ul class="game-board-row" ng-repeat="row in gameBoard track by $index">
       <li class="game-board-cell" ng-repeat="cell in row track by $index">
         <span class="cell"
