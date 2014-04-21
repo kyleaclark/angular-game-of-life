@@ -29,17 +29,9 @@ describe('Controller: MainCtrl', function () {
 
       // Assert
       expect(scope.initVars.calledOnce).to.be.true;
-    });
 
-    it('should create a random game board', function () {
-      // Arrange
-      spy(scope, 'createRandomGameBoard');
-
-      // Act
-      scope.createRandomGameBoard();
-
-      // Assert
-      expect(scope.createRandomGameBoard.calledOnce).to.be.true;
+      // Restore
+      scope.initVars.restore();
     });
 
   });
@@ -58,40 +50,196 @@ describe('Controller: MainCtrl', function () {
       expect(scope.MAX_COL).to.equal(5);
       expect(scope.DEAD_CELL).to.equal(0);
       expect(scope.LIVE_CELL).to.equal(1);
+      expect(scope.DEFAULT_CELL_STR).to.equal('0100010011110010100010001');
+      expect(scope.gameBoardStart).to.equal(true);
     });
 
   });
 
-  describe('When creating a random game board', function () {
+  describe('When initializing a new game', function () {
 
-    it('should create an array with length with the product of MAX_ROW multiplied by MAX_COL', function () {
+    it('should make a method call to init default game cells for a default game type', function () {
       // Arrange
-      var gameBoard = null,
-          arrayLength = scope.MAX_ROW * scope.MAX_COL;
+      spy(scope, 'initDefaultGameCells');
 
       // Act
-      scope.createRandomGameBoard();
-      gameBoard = scope.randomGameBoard;
+      scope.initGame('default');
 
       // Assert
-      expect(gameBoard.length).to.equal(arrayLength);
+      expect(scope.initDefaultGameCells.calledOnce).to.be.true;
+
+      // Restore
+      scope.initDefaultGameCells.restore();
     });
 
-    it('should create a game board array of random cell values', function () {
+    it('should make a method all to init random game cells for a random game type', function () {
       // Arrange
-      var gameBoard = null,
+      spy(scope, 'initRandomGameCells');
+
+      // Act
+      scope.initGame('random');
+
+      // Assert
+      expect(scope.initRandomGameCells.calledOnce).to.be.true;
+
+      // Restore
+      scope.initRandomGameCells.restore();
+    });
+
+    it('should make a method all to init default game cells for a non-specified game type', function () {
+      // Arrange
+      spy(scope, 'initDefaultGameCells');
+
+      // Act
+      scope.initGame();
+
+      // Assert
+      expect(scope.initDefaultGameCells.calledOnce).to.be.true;
+
+      // Restore
+      scope.initDefaultGameCells.restore();
+    });
+
+    it('should define the value of generations', function () {
+      // Act
+      scope.initGame();
+
+      // Assert
+      expect(scope.generations).to.exist;
+    });
+
+    it('should set the value of game board start to false', function () {
+      // Act
+      scope.initGame();
+
+      // Assert
+      expect(scope.gameBoardStart).to.be.false;
+    });
+
+    it('should set the value of game board initialized to true', function () {
+      // Act
+      scope.initGame();
+
+      // Assert
+      expect(scope.gameBoardInitialized).to.be.true;
+    });
+
+    it('should make a method all to init game board', function () {
+      // Arrange
+      spy(scope, 'initGameBoard');
+
+      // Act
+      scope.initGame();
+
+      // Assert
+      expect(scope.initGameBoard.calledOnce).to.be.true;
+
+      // Restore
+      scope.initGameBoard.restore();
+    });
+
+  });
+
+  describe('When initializing default game cells', function () {
+
+    describe('Given a default game cells array is not defined', function () {
+
+      it('should make a method call to create default game cell values', function () {
+        // Arrange
+        scope.defaultGameCellsArray = undefined;
+        spy(scope, 'createDefaultGameCellValues');
+
+        // Act
+        scope.initDefaultGameCells();
+
+        // Assert
+        expect(scope.createDefaultGameCellValues.calledOnce).to.be.true;
+
+        // Restore
+        scope.createDefaultGameCellValues.restore();
+      });
+
+    });
+
+    it('should set the value of the game cells array to the default game cells array', function () {
+      // Arrange
+      scope.defaultGameCellsArray = ['1', '2', '3'];
+
+      // Act
+      scope.initDefaultGameCells();
+
+      // Assert
+      expect(scope.gameCellsArray).to.eql(scope.defaultGameCellsArray);
+    });
+
+  });
+
+  describe('When creating default game cell values', function () {
+
+    it('should create a default game cells array with the length of the product of MAX_ROW multiplied by MAX_COL', function () {
+      // Arrange
+      var arrayLength = scope.MAX_ROW * scope.MAX_COL;
+
+      // Act
+      scope.createDefaultGameCellValues();
+
+      // Assert
+      expect(scope.defaultGameCellsArray).to.exist;
+      expect(scope.defaultGameCellsArray).to.be.instanceof(Array);
+      expect(scope.defaultGameCellsArray.length).to.equal(arrayLength);
+    });
+
+    it('should contain cell values matching the values in the default cell string data', function () {
+      // Arrange
+      var index = null,
+          cellStr = null,
+          cellValue = null,
+          cellsArrayLength = scope.DEFAULT_CELL_STR.length;
+
+      // Act
+      scope.createDefaultGameCellValues();
+
+      // Assert
+      for (index = 0; index < cellsArrayLength; index++) {
+        cellStr = scope.DEFAULT_CELL_STR.charAt(index);
+        cellValue = parseInt(cellStr, 10 );
+        expect(scope.defaultGameCellsArray[index]).to.equal(cellValue);
+      }
+    });
+
+  });
+
+  describe('When initializing random game cells', function () {
+
+    it('should define the game cells array with the length of the product of MAX_ROW multiplied by MAX_COL', function () {
+      // Arrange
+      var arrayLength = scope.MAX_ROW * scope.MAX_COL;
+
+      // Act
+      scope.initRandomGameCells();
+
+      // Assert
+      expect(scope.gameCellsArray).to.exist;
+      expect(scope.gameCellsArray).to.be.instanceof(Array);
+      expect(scope.gameCellsArray.length).to.equal(arrayLength);
+    });
+
+    it('should set the game cells array to contain random cell values of 0 or 1', function () {
+      // Arrange
+      var gameCells = null,
+          gameCellsLength = null,
           gameBoardLength = null,
           cell = null,
           index = null;
 
       // Act
-      scope.createRandomGameBoard();
-      gameBoard = scope.randomGameBoard;
-      gameBoardLength = gameBoard.length;
+      scope.initRandomGameCells();
+      gameCells = scope.gameCellsArray;
+      gameCellsLength = gameCells.length;
 
       // Assert
-      for (index = 0; index < gameBoardLength; index++) {
-        cell = gameBoard[index];
+      for (index = 0; index < gameCellsLength; index++) {
+        cell = gameCells[index];
         expect(cell).to.be.at.least(0);
         expect(cell).to.be.at.most(1);
       }
@@ -99,33 +247,28 @@ describe('Controller: MainCtrl', function () {
 
   });
 
-  describe('When initializing a gameBoard', function () {
+  describe('When initializing game board', function () {
 
-    it('should define an empty gameBoards array container', function () {
+    it('should define an empty game boards array container', function () {
       // Arrange
-      var cellValues = null;
-
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
+      scope.initDefaultGameCells();
 
       // Act
-      scope.initGameBoard(cellValues);
+      scope.initGameBoard();
 
       // Assert
       expect(scope.gameBoards).to.exist;
       expect(scope.gameBoards).to.be.instanceof(Array);
     });
 
-    it('should push a new game board array on to gameBoards array container', function () {
+    it('should push a new game board on to the game boards array container', function () {
       // Arrange
-      var cellValues = null,
-          gameBoard = null;
+      var gameBoard = null;
 
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
+      scope.initDefaultGameCells();
 
       // Act
-      scope.initGameBoard(cellValues);
+      scope.initGameBoard();
       gameBoard = scope.gameBoards[0];
 
       // Assert
@@ -133,14 +276,13 @@ describe('Controller: MainCtrl', function () {
       expect(gameBoard).to.be.instanceof(Array);
     });
 
-    it('should push a 2d array game board defined by the scope MAX_ROW and MAX_COL values', function () {
+    it('should create a 2d array game board defined by the MAX_ROW and MAX_COL values', function () {
       var cellValues = null,
           gameBoard = null,
           rowSize = scope.MAX_ROW - 1,
           colSize = scope.MAX_COL - 1;
 
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
+      scope.initDefaultGameCells();
 
       // Act
       scope.initGameBoard(cellValues);
@@ -150,61 +292,49 @@ describe('Controller: MainCtrl', function () {
       expect(gameBoard[rowSize][colSize]).to.exist;
     });
 
-    it('should populate each game board cell with the specified cellsArray of values', function () {
+    it('should populate each game board cell with the specified game cells array of values', function () {
       // Arrange
       var rowSize = scope.ROW_SIZE,
           colSize = scope.COL_SIZE,
           gameBoard = null,
+          cellValues = null,
           row = null,
           col = null,
-          cell = null,
-          cellValues = null;
+          rowColIndex = null,
+          cell = null;
 
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
+      scope.initDefaultGameCells();
+      cellValues = scope.gameCellsArra
 
       // Act
-      scope.initGameBoard(cellValues);
+      scope.initGameBoard();
       gameBoard = scope.gameBoards[0];
 
       // Assert
       for (row = 0; row < rowSize; row++) {
+        rowColIndex = (row * 5);
         for (col = 0; col < colSize; col++) {
-          cell = gameBoard[row][col];
-          expect(cell).to.be.at.least(0);
-          expect(cell).to.be.at.most(1);
+          rowColIndex += 1;
+          cell = cellValues[row + col];
+          expect(gameBoard[row][col]).to.equal(cell);
         }
       }
     });
 
-    it('should set the value of generations to 1', function () {
+    it('should make a method call to update the game board generation', function () {
       // Arrange
-      var cellValues = null;
+      spy(scope, 'updateGameBoardGeneration');
 
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
+      scope.initDefaultGameCells();
 
       // Act
-      scope.initGameBoard(cellValues);
+      scope.initGameBoard();
 
       // Assert
-      expect(scope.generations).to.equal(1);
-    });
+      expect(scope.updateGameBoardGeneration.calledOnce).to.be.true;
 
-    it('should make a method call to update the game board display', function () {
-      // Arrange
-      var cellValues = null;
-
-      scope.createRandomGameBoard();
-      cellValues = scope.randomGameBoard;
-
-      spy(scope, 'updateGameBoardDisplay');
-
-      // Act
-      scope.initGameBoard(cellValues);
-
-      // Assert
-      expect(scope.updateGameBoardDisplay.calledOnce).to.be.true;
+      // Restore
+      scope.updateGameBoardGeneration.restore();
     });
 
   });
@@ -215,6 +345,8 @@ describe('Controller: MainCtrl', function () {
       // Arrange
       var gameBoard = null,
           gameBoardsLength = null;
+
+      scope.initGame();
 
       gameBoardsLength = scope.gameBoards.length;
       gameBoard = scope.gameBoards[gameBoardsLength - 1];
@@ -231,6 +363,8 @@ describe('Controller: MainCtrl', function () {
       // Arrange
       var gameBoardsLength = null,
           newGameBoardsLength = null;
+
+      scope.initGame();
 
       gameBoardsLength = scope.gameBoards.length;
 
@@ -254,6 +388,8 @@ describe('Controller: MainCtrl', function () {
           col = null,
           cell = null;
 
+      scope.initGame();
+
       // Act
       scope.createNewGeneration();
       gameBoard = scope.gameBoards[gameBoardsLength];
@@ -267,27 +403,54 @@ describe('Controller: MainCtrl', function () {
       }
     });
 
+    it('should make a method call to update the game board generation', function () {
+      // Arrange
+      scope.initGame();
+
+      spy(scope, 'updateGameBoardGeneration');
+
+      // Act
+      scope.createNewGeneration();
+
+      // Assert
+      expect(scope.updateGameBoardGeneration.calledOnce).to.be.true;
+
+      // Restore
+      scope.updateGameBoardGeneration.restore();
+    });
+
+  });
+
+  describe('When updating the game board generation', function () {
+
     it('should set the value of generations to plus 1', function () {
       // Arrange
-      var generationsPlusOne = scope.generations + 1;
+      var plusOneGeneration = 0;
+
+      scope.initGame();
+
+      plusOneGeneration = scope.generations + 1;
 
       // Act
-      scope.createNewGeneration();
+      scope.updateGameBoardGeneration();
 
       // Assert
-      expect(scope.generations).to.equal(generationsPlusOne);
+      expect(scope.generations).to.equal(plusOneGeneration);
     });
 
-    it('should make a method call to update the game board display', function () {
+    it('should set the game board value to the last item in the game boards container', function () {
       // Arrange
-      spy(scope, 'updateGameBoardDisplay');
+      var lastGameBoard = null;
+
+      scope.initGame();
 
       // Act
-      scope.createNewGeneration();
+      scope.updateGameBoardGeneration();
+      lastGameBoard = scope.gameBoards.length - 1;
 
       // Assert
-      expect(scope.updateGameBoardDisplay.calledOnce).to.be.true;
-    });
+      expect(scope.gameBoard).to.eql(scope.gameBoards[lastGameBoard]);
+    })
 
   });
 
@@ -324,6 +487,9 @@ describe('Controller: MainCtrl', function () {
       // Assert
       expect(scope.verifyNeighborCellsExist.calledOnce).to.be.true;
       expect(scope.verifyNeighborCellsExist.calledWith(0, 0)).to.be.true;
+
+      // Restore
+      scope.verifyNeighborCellsExist.restore();
     });
 
     it('should call sumNeighborCellValues method to get the live neighbors value for the row and col of the cell', function () {
@@ -338,6 +504,9 @@ describe('Controller: MainCtrl', function () {
       // Assert
       expect(scope.sumNeighborCellValues.calledOnce).to.be.true;
       expect(scope.sumNeighborCellValues.calledWith(0, 0)).to.be.true;
+
+      // Restore
+      scope.sumNeighborCellValues.restore();
     });
 
     describe('And given the cell is dead', function () {
