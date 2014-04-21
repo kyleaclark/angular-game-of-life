@@ -8,7 +8,6 @@ angular.module('gameOfLifeApp', [
     /* Init main flow */
     $scope.init = function () {
       $scope.initVars();
-      $scope.createRandomGameBoard();
     };
 
     /* Init vars within scope */
@@ -20,9 +19,56 @@ angular.module('gameOfLifeApp', [
       $scope.MAX_COL = 5;
       $scope.DEAD_CELL = 0;
       $scope.LIVE_CELL = 1;
+      $scope.DEFAULT_CELL_STR = '0100010011110010100010001';
+
+      $scope.gameBoardStart = true;
     };
 
-    $scope.createRandomGameBoard = function () {
+    $scope.initGame = function (gameBoardType) {
+      switch (gameBoardType) {
+        case 'default':
+          $scope.initDefaultGameCells();
+          break;
+        case 'random':
+          $scope.initRandomGameCells();
+          break;
+        default:
+          $scope.initDefaultGameCells();
+          break;
+      }
+
+      $scope.generations = 0;
+      $scope.gameBoardStart = false;
+      $scope.gameBoardInitialized = true;
+      $scope.initGameBoard();
+    };
+
+    $scope.initDefaultGameCells = function () {
+      if (typeof $scope.defaultGameCellsArray === 'undefined') {
+        $scope.createDefaultGameCellValues();
+      }
+
+      $scope.gameCellsArray = $scope.defaultGameCellsArray;
+    };
+
+    $scope.createDefaultGameCellValues = function () {
+      var defaultCellsStr = $scope.DEFAULT_CELL_STR,
+          cellStr = null,
+          cellsArraySize = $scope.MAX_ROW * $scope.MAX_COL,
+          cellsArray = new Array(cellsArraySize),
+          cellsArrayLength = cellsArray.length,
+          index = null;
+
+      // Set all cell values to 0
+      for (index = 0; index < cellsArrayLength; index++) {
+        cellStr = defaultCellsStr.charAt(index);
+        cellsArray[index] = parseInt(cellStr, 10 );
+      }
+
+      $scope.defaultGameCellsArray = cellsArray;
+    };
+
+    $scope.initRandomGameCells = function () {
       var cellsArraySize = $scope.MAX_ROW * $scope.MAX_COL,
           cellsArray = new Array(cellsArraySize),
           cellsArrayLength = cellsArray.length,
@@ -33,40 +79,35 @@ angular.module('gameOfLifeApp', [
         cellsArray[index] = Math.round(Math.random());
       }
 
-      $scope.randomGameBoard = cellsArray;
-      $scope.initGameBoard(cellsArray);
+      $scope.gameCellsArray = cellsArray;
     };
 
     /* Initialize gameBoard array */
-    $scope.initGameBoard = function (cellsArray) {
+    $scope.initGameBoard = function () {
       var GAME_BOARD_SIZE = $scope.GAME_BOARD_SIZE,
           row = null,
           col = null,
+          rowColIndex = null,
           maxRow = $scope.MAX_ROW,
           maxCol = $scope.MAX_ROW,
+          cellsArray = $scope.gameCellsArray,
           gameBoard = new Array(GAME_BOARD_SIZE);
 
       // Create gameBoard array of rows and column cells
       for (row = 0; row < maxRow; row++) {
         gameBoard[row] = new Array(this.rowSize);
+        rowColIndex = (row * 5);
 
         for (col = 0; col < maxCol; col++) {
-          // Round number to a random generation between 0 < 1
-          gameBoard[row][col] = cellsArray[row + col];
+          gameBoard[row][col] = cellsArray[rowColIndex];
+          rowColIndex += 1;
         }
       }
 
       // Init empty gameBoards array and push initial randomized gameBoard to gameBoards
       $scope.gameBoards = [];
       $scope.gameBoards.push(gameBoard);
-      $scope.generations = 1;
-      $scope.updateGameBoardDisplay();
-    };
-
-    $scope.updateGameBoardDisplay = function () {
-      var lastGameBoard = $scope.gameBoards.length - 1;
-
-      $scope.gameBoard = $scope.gameBoards[lastGameBoard];
+      $scope.updateGameBoardGeneration();
     };
 
     /* Create a new generation of cell values to push to gameBoards array */
@@ -91,10 +132,20 @@ angular.module('gameOfLifeApp', [
         }
       }
 
-      // Push new childGeneration game board to gameBoards
+      // Push childGenerationBoard on to gameBoards and update game board generation
       $scope.gameBoards.push(childGenerationBoard);
+      $scope.updateGameBoardGeneration();
+    };
+
+    $scope.updateGameBoardGeneration = function () {
+      var lastGameBoard = null;
+
+      // Update gameBoards array container and number of generations
       $scope.generations += 1;
-      $scope.updateGameBoardDisplay();
+
+      // Update gameBoard with last gameBoards item to update the view-model display
+      lastGameBoard = $scope.gameBoards.length - 1;
+      $scope.gameBoard = $scope.gameBoards[lastGameBoard];
     };
 
     /* Logic to determine cell values of evolution generation */
