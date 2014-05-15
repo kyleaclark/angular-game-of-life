@@ -11,6 +11,12 @@ April 2014
 
 AngularJS application : evolves generations of dead or alive cells in a game board
 
+####Screenshot Example
+
+*Taken on May 14, 2014*
+
+![alt text](https://raw.github.com/kyleaclark/game-of-life/master/game-of-life.png "Screenshot Image")
+
 ##Dependencies
 
 [Setup instructions default to Mac OS X environment, but setup should be possible in Windows and Linux, too]
